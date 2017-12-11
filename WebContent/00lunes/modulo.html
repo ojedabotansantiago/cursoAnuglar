@@ -16,10 +16,13 @@
         var myModulo2 = (function(param) {
             return {
                 nombre: param,
-                cargo: 'profe'
+                cargo: 'profe',
+                agregar: function(params) {
+                    alert(this.nombre)
+                }
             }
         })('fsanti');
-        console.log(myModulo2.nombre);
+        console.log(myModulo2.agregar());
     </script>
 </body>
 
