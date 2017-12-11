@@ -9,5 +9,36 @@
 <body>
     <h1>hola mundo</h1>
 </body>
+<script>
+    function saludar(params) {
+        console.log('hola mundo');
+    }
+    saludar();
+
+    var producto = {
+        id: 1,
+        nombre: 'fregona',
+        cantidad: 123,
+        disponible: true,
+        precio: 3.45,
+        marca: {
+            id: 1,
+            nombre: 'vileda'
+        },
+        saludo: function(param) {
+            console.log('hola ' + param)
+        }
+    };
+    producto.saludo('Santi');
+    console.log(producto.marca.nombre);
+    console.log(producto.nombre);
+    console.log(producto['nombre']);
+
+    var pruductoString = JSON.stringify(producto);
+    console.log(pruductoString);
+
+    var productoObject = JSON.parse(pruductoString);
+    console.log(productoObject);
+</script>
 
 </html>
