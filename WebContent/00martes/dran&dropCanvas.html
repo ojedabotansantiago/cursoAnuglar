@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .floating-box {
+            display: inline-block;
+            width: 150px;
+            height: 75px;
+            margin: 10px;
+            border: 3px solid black;
+            text-align: center;
+            margin: auto;
+            margin-top: 5%;
+            margin-left: 2%;
+        }
+        
+        .floating-div {
+            display: inline-block;
+        }
+        
+        .after-box {
+            background-color: yellowgreen;
+            border: 3px solid black;
+            display: inline-block;
+            width: 100%;
+            height: 50%;
+            margin: 10px;
+        }
+        
+        .miSection {
+            border: 2px solid;
+            width: 40%;
+            margin-left: 30%;
+            background-color: grey;
+        }
+        
+        .miSection2 {
+            position: absolute;
+            border: 2px solid yellow;
+            width: 40%;
+            margin-left: 30%;
+            margin-top: 15%;
+            height: 500px;
+        }
+        
+        .packman {
+            margin-top: 55%;
+        }
+    </style>
+</head>
+
+<body align="center" onLoad="iniciar()">
+    <section class="miSection" id="section" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <h2>sitios</h2>
+        <div class="floating-div">
+            <img ondragstart="drag(event)" src="https://endesavehiculoelectrico.com/wp-content/uploads/2017/08/madrid.jpg" draggable="true" id="e1" class="floating-box"></img>
+        </div>
+        <div class="floating-div">
+            <img ondragstart="drag(event)" src="https://a4.odistatic.net/images/landingpages/vacation/640x480/barcelona_640x480.jpg" draggable="true" id="e2" class="floating-box"></img>
+        </div>
+        <div class="floating-div">
+            <img ondragstart="drag(event)" src="https://ep00.epimg.net/elviajero/imagenes/2015/12/07/actualidad/1449503282_154169_1449503815_noticia_normal.jpg" draggable="true" id="e3" class="floating-box"></img>
+        </div>
+    </section>
+    <section class="miSection2">
+        <div class="after-box" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>sitios visitados</h2>
+        </div>
+        <div class="after-box" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>sitios por visitar</h2>
+        </div>
+    </section>
+    <section class="packman">
+        <canvas id="lienzo1" width="300" height="300">
+            Su navegador no permite utilizar canvas.
+        </canvas>
+    </section>
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+        }
+
+        function retornarLienzo(x) {
+            var canvas = document.getElementById(x);
+            if (canvas.getContext) {
+                var lienzo = canvas.getContext("2d");
+                return lienzo;
+            } else
+                return false;
+        }
+        var fila = 100;
+        var init = 50;
+        var tamaño = false;
+        var boca = 110;
+
+        function dibujar() {
+            var lienzo = retornarLienzo("lienzo1");
+
+            if (lienzo) {
+                lienzo.clearRect(0, 0, 300, 300);
+                lienzo.fillStyle = "rgb(0,255,0)";
+                lienzo.beginPath();
+                lienzo.arc(200, 100, 5, 0, Math.PI * 2, true);
+                lienzo.fill();
+
+                lienzo.fillStyle = "rgb(255,0,0)";
+                lienzo.beginPath();
+                lienzo.arc(220, 100, 5, 0, Math.PI * 2, true);
+                lienzo.fill();
+
+                lienzo.fillStyle = "rgb(255,255,0)";
+                lienzo.beginPath();
+                lienzo.arc(fila, 100, init, (Math.PI / 180) * 40, (Math.PI / 180) * 320);
+                lienzo.lineTo(boca, 100);
+                lienzo.fill();
+                if (tamaño) {
+                    fila--;
+                    boca--
+                } else {
+                    fila++;
+                    boca++
+                }
+                if (fila > 250) {
+                    tamaño = true
+                } else if (fila < 100) {
+                    tamaño = false;
+
+                }
+            }
+        }
+
+        function iniciar() {
+            setInterval(dibujar, 10);
+        }
+    </script>
+
+</body>
+
+</html>

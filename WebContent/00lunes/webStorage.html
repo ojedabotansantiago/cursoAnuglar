@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>WebStorage</title>
+</head>
+
+<body>
+    <script>
+        localStorage.setItem('miObject', JSON.stringify({
+            id: 1,
+            nombre: 'Holmes'
+        }));
+        console.log(JSON.parse(localStorage.getItem('miObject')));
+        /*  localStorage.removeItem('miObject');
+         localStorage.clear(); */
+        /* localStorage.setItem('user', 'Holmes');
+         localStorage.setItem('friend', 'asd'); */
+    </script>
+</body>
+
+</html>
