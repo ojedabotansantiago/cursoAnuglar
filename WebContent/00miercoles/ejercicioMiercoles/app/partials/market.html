@@ -1,0 +1,32 @@
+<section align="center">
+    <div class="marketView">
+        <h1>prudctos</h1>
+    </div>
+    <table border="1" align="center">
+        <tr>
+            <th>producto</th>
+            <th>city</th>
+            <th>precio</th>
+
+        </tr>
+        <tr ng-repeat="prod in productos">
+            <td>{{prod.producto}}</td>
+            <td>{{prod.city}}</td>
+            <td>{{prod.precio}}</td>
+            <td><button ng-click="borrarProducto(prod.id);">borrar</button></td>
+            <td> <a href="#/n/{{prod.id}}" class="cardBody btn-link">View {{ customer.orders.length }} Orders</a></td>
+        </tr>
+    </table>
+
+</section>
+<section align="center">
+    <input type="text" ng-model="newProduct.id" placeholder="introduce id"></input>
+    <br>
+    <input type="text" ng-model="newProduct.producto" placeholder="introduce producto"></input>
+    <br>
+    <input type="text" ng-model="newProduct.precio" placeholder="introduce precio"></input>
+    <br>
+    <input type="text" ng-model="newProduct.city" placeholder="introduce city"></input>
+    <br>
+    <button ng-click="nuevoProducto(newProduct)">nuevo producto</button>
+</section>
