@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        var myModulo = function(n, m, s) {
+            console.log('hola ' + n + '' + m + '' + s);
+        }
+        myModulo('a', 'b', 'c');
+
+        var myModulo2 = (function(param) {
+            return {
+                nombre: param,
+                cargo: 'profe',
+                agregar: function(params) {
+                    alert(this.nombre)
+                }
+            }
+        })('fsanti');
+        console.log(myModulo2.agregar());
+    </script>
+</body>
+
+</html>

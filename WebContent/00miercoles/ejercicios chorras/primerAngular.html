@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="../angular.js"></script>
+
+<body ng-app="userApp">
+
+    <div ng-controller="userCtrlString">
+        <input type="text" ng-model="usuario.nombre" placeholder="intro nombre"><br/>
+        <input type="text" ng-model="usuario.edad" placeholder="intro edad"><br/>
+
+        <span>Tu nombre es: {{usuario.nombre}}</span>
+        <span>Tu nombre es: {{usuario.edad}}</span>
+        <button type="text" ng-click="guardar(usuario)">Guarda</button>
+    </div>
+
+    <div ng-controller="facturaCtrl">
+        <table border="1">
+            <tr>
+                <th>id</th>
+                <th>precio</th>
+                <th>empresa</th>
+            </tr>
+            <tr ng-repeat="fact in facturas">
+                <td>{{fact.id}}</td>
+                <td>{{fact.precio}}</td>
+                <td><span ng-repeat="e in fact.empresas">{{e.id}} {{e.nombre}}</span></td>
+            </tr>
+        </table>
+        <div ng-controller="dniCntrl">
+            <article>
+                <button ng-click="obtenerDni(facturas)">dni</button>
+            </article>
+        </div>
+    </div>
+</body>
+<script>
+    var myApp = angular.module('userApp', []);
+    myApp.controller("userCtrlString", function($scope) {
+        $scope.usuario = {
+            nombre: "luis",
+            edad: 2
+        };
+        $scope.guardar = function(usuario) {
+            localStorage.setItem('usr', JSON.stringify(usuario));
+        }
+    });
+    myApp.controller("facturaCtrl", function($scope) {
+        $scope.facturas = [{
+            id: 1,
+            precio: 2,
+            empresas: [{
+                id: 0,
+                nombre: 'babel'
+            }, {
+                id: 12,
+                nombre: 'asd'
+            }]
+        }, {
+            id: 2,
+            precio: 3,
+            empresas: [{
+                id: 16,
+                nombre: 'tomas'
+            }, {
+                id: 22,
+                nombre: 'rrt'
+            }]
+        }, {
+            id: 5,
+            precio: 5,
+            empresas: [{
+                id: 13,
+                nombre: 'pass'
+            }, {
+                id: 34,
+                nombre: 'trm'
+            }]
+        }]
+    })
+    myApp.controller("dniCntrl", function($scope) {
+        $scope.obtenerDni = function(nombre) {
+            console.log("arg enviado " + JSON.stringify(nombre));
+        }
+    })
+</script>
+
+</html>

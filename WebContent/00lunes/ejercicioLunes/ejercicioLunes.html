@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+        
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div align="center">
+        <div>
+            <h2 id='miH1'> el nombre es: </h2>
+            <br>
+            <h3 id='miDiv'></h3>
+            <button type="button" onclick="setProcuto()" class="btn btn-danger" style="margin-top:5%;">Enviar</button>
+            <br>
+            <input type="text" id="data" placeholder="cambia el nombre del producto" style="margin-top:5%;"></input>
+            <br>
+            <h3 id="miH3" style="margin-top:5%;"></h3>
+        </div>
+        <section>
+            <h2 style="margin-top:10%;">GESTION LOCAL SOTORAGE</h2>
+            <div>
+                <button type="button" onclick="guardarEnLocalStorage()" class="btn btn-primary">Guardar Storage</button>
+                <button type="button" onclick="mostrarLocalStorage()" class="btn btn-info">Mostrar Storage</button>
+                <button type="button" onclick="borrarElLocalStorage()" class="btn btn-warning">Borrar Storage</button>
+            </div>
+            <h3 id="miLocalStorage"></h3>
+        </section>
+        <section>
+            <h2> GEOLOCATION </h2>
+            <div>
+                <button type="button" onclick="getLocation()" class="btn btn-success">mostrar localizacion</button>
+                <button type="button" onclick="setLocation()" class="btn btn-success">poner nueva localizacion</button>
+                <br>
+                <input type="text" id="latitud" placeholder="cambia la latitud" style="margin-top:5%;"></input>
+                <input type="text" id="longitud" placeholder="cambia la longitud"></input>
+            </div>
+        </section>
+    </div>
+    <div id="map"></div>
+    <script>
+        var myProduct = {
+                id: 1,
+                nombre: 'aspiradora',
+                cantidad: 2,
+                disponible: true,
+                precio: 100 + '$'
+            }
+            /*  GESTION OBJ */
+        var pintar = (function name(params) {
+            document.getElementById("miDiv").innerHTML = JSON.stringify(myProduct);
+        })();
+
+        function setProcuto() {
+            var miText = document.getElementById("data").value;
+            myProduct.nombre = miText;
+            document.getElementById("miH1").innerHTML = 'El nombre es: ' + myProduct.nombre;
+            document.getElementById("miH3").innerHTML = 'El nuevo obj producto es' + JSON.stringify(myProduct);
+        }
+        /* GESTION STORAGE */
+        function guardarEnLocalStorage() {
+            localStorage.setItem('myProduct', JSON.stringify(myProduct));
+        }
+
+        function mostrarLocalStorage() {
+            var myStorage = localStorage.getItem('myProduct');
+            document.getElementById("miLocalStorage").innerHTML = 'en el storage tenemos: ' + myStorage;
+        }
+
+        function borrarElLocalStorage(params) {
+            localStorage.clear();
+        }
+        /* GESTION GEOLOCATION */
+        function getLocation() {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        }
+
+        function showPosition(position) {
+            var latitud = position.coords.latitude;
+            var longitud = position.coords.longitude;
+            alert('Tus coordenadas son: (' + latitud + ',' + longitud + ')');
+            return myPosition = {
+                'latitud': latitud,
+                'longitud': longitud
+            }
+        }
+
+        function setLocation() {
+            var miLatitud = document.getElementById("latitud").value;
+            var miLongitud = document.getElementById("longitud").value;
+        }
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {
+                    lat: showPosition().latitud,
+                    lng: showPosition().longitud
+                },
+                zoom: 6
+            });
+            var infoWindow = new google.maps.InfoWindow({
+                map: map
+            });
+
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Location found.');
+                    map.setCenter(pos);
+                }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmNs2Dg7LMrHE0m3xxzsOIdFist0dxmO4&callback=initMap">
+    </script>
+</body>
+
+</html>
